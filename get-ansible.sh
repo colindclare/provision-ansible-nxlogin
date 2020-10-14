@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Setup Python 3 venv, activate it, and add to bashrc
-python3 -m venv ${USER}-py3
+python3 -m venv ${HOME}/${USER}-py3
 source ${HOME}/${USER}-py3/bin/activate
 echo "source ${HOME}/${USER}-py3/bin/activate" >> ${HOME}/.bashrc
 
@@ -19,7 +19,7 @@ if ! [[ :$PATH: == *:"${HOME}/bin":* ]]; then
 fi
 
 # Grab getinv.sh and install it
-wget -O ${HOME}/bin/getinv 
+wget -O ${HOME}/bin/getinv https://raw.githubusercontent.com/colindclare/provision-ansible-nxlogin/master/getinv.sh
 chmod 700 ${HOME}/bin/getinv 
 
 # Create general Ansiblle directory structure
