@@ -52,43 +52,43 @@ _sortResults () {
     for server in $servers; do
 	ALL_NODES+=("$server")
 	
-	if [[ $server =~ -node([1-9]+)?\.[a-z] ]]; then
+	if [[ $server =~ -node([0-9]+)?\.[a-z] ]]; then
 	    ALLWEB_NODES+=("$server")
 	    WEBFRONT_NODES+=("$server")
 	fi
 
-	if [[ $server =~ -admin[1-9] ]]; then
+	if [[ $server =~ -admin[0-9] ]]; then
 	    ALLWEB_NODES+=("$server")
 	    ADMIN_NODES+=("$server")
 	fi
 
-	if [[ $server =~ -db([1-9]+)?\.[a-z] ]]; then
+	if [[ $server =~ -db([0-9]+)?\.[a-z] ]]; then
 	    DB_NODES+=("$server")
 	fi
 
-	if [[ $server =~ -fs([1-9]+)?\.[a-z] ]]; then
+	if [[ $server =~ -fs([0-9]+)?\.[a-z] ]]; then
 	    FS_NODES+=("$server")
 	fi
 
-	if [[ $server =~ -lb([1-9]+)?\.[a-z] ]]; then
+	if [[ $server =~ -lb([0-9]+)?\.[a-z] ]]; then
 	    LB_NODES+=("$server")
 	fi
 
-	if [[ $server =~ -dev([1-9]+)?\.[a-z] ]]; then
+	if [[ $server =~ -dev([0-9]+)?\.[a-z] ]]; then
 	    DEV_NODES+=("$server")
 	else
 	    PROD_NODES+=("$server")
 	fi
 
-	if [[ $server =~ -es[1-9] ]]; then
+	if [[ $server =~ -es[0-9] ]]; then
 	    ES_NODES+=("$server")
 	fi
 
-	if [[ $server =~ -cache[1-9] ]]; then
+	if [[ $server =~ -cache[0-9] ]]; then
 	    CACHE_NODES+=("$server")
 	fi
 
-	if [[ $server =~ -cron[1-9] ]]; then
+	if [[ $server =~ -cron[0-9] ]]; then
 	    CRON_NODES+=("$server")
 	fi
     done 
@@ -160,7 +160,7 @@ _main () {
     for prefix in $prefixes; do
 	unset ALL_NODES PROD_NODES DEV_NODES ALLWEB_NODES WEBFRONT_NODES ADMIN_NODES DB_NODES ES_NODES FS_NODES LB_NODES CACHE_NODES CRON_NODES
 	declare -a ALL_NODES PROD_NODES DEV_NODES ALLWEB_NODES WEBFRONT_NODES ADMIN_NODES DB_NODES ES_NODES FS_NODES LB_NODES CACHE_NODES CRON_NODES
-	server_list=$($GREP "^$prefix" $MASTER_LIST)
+	server_list=$($GREP "^$prefix" $MASTER_LIST | $SORT | $UNIQ)
         _sortResults "$server_list"
         _writeIni > ${INV_PATH}/${prefix}
     done
